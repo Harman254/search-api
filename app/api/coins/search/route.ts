@@ -37,10 +37,12 @@ export async function GET (req:Request) {
     const { searchParams } = new URL(req.url)
     console.log(req.url)
     const query = searchParams.get("query")
-
-    const filtredCoins = coins.data.coins.filter((coin: CoinProps ) => {
+        if (typeof query !== "string")  throw new Error("Query is not a string")
+    
+            const filtredCoins = coins.data.coins.filter((coin: CoinProps ) => {
             return coin.name.toLowerCase().includes(query?.toLowerCase()) || coin.symbol.toLowerCase().includes(query?.toLowerCase())
-    })
-
+    
+        })
+    
     return NextResponse.json(filtredCoins)
 }
